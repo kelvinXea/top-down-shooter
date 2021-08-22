@@ -29,6 +29,14 @@ func get_hit_damage():
 	
 func get_hit_sound() -> Node:
 	return $Hit_Sound
+
+func proyectile_hit() -> void:
+	$CollisionShape2D.set_deferred("disabled", true)
+	$AnimatedSprite.hide()
+	$Hit_Sound.play()
+	yield($Hit_Sound, "finished")
+	queue_free()
+	
 	
 func get_hit_animation() -> AnimatedSprite:
 	return hit_animation.instance()

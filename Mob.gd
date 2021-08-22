@@ -65,14 +65,11 @@ func player_moves(_position):
 	player_position = _position
 	
 func calculate_damage(proyectile: Proyectile):
-	var sound = proyectile.get_hit_sound()
-	sound.play()
 	life -= proyectile.get_hit_damage()
 	var anim = proyectile.get_hit_animation()
+	proyectile.proyectile_hit()
 	run_damage_animation(anim, proyectile)
 	print(life)
-	yield(sound, "finished")
-	proyectile.queue_free()
 	if life <= 0:
 		queue_free()
 

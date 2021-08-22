@@ -12,8 +12,6 @@ func _ready():
 	randomize()
 	
 	var monsters = [ 
-		MonsterSpawn.new($StageManager/SpawnPoint1.position) , 
-		MonsterSpawn.new($StageManager/SpawnPoint1.position) ,
 		MonsterSpawn.new($StageManager/SpawnPoint1.position) ,
 		MonsterSpawn.new($StageManager/SpawnPoint1.position) ,
 		MonsterSpawn.new($StageManager/SpawnPoint1.position) ,
