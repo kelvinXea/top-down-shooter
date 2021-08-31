@@ -7,6 +7,7 @@ signal move
 export var speed = 200
 export var limit_px = 15
 export var max_proyectiles = 5
+export var max_life = 80
 export var delay_between_proyectiles = 0.25
 
 var screen_size
@@ -16,6 +17,8 @@ var is_shooting = false
 var can_shoot = true
 var velocity = Vector2.ZERO
 var point = Vector2.ZERO
+var life = max_life
+var life_bar: TextureProgress
 
 var is_knockback = false
 
@@ -34,13 +37,10 @@ func _input(event):
 		point = event.position - position
 		if is_shooting:
 			target = event.position
-
-
 		
 	elif event is InputEventMouseMotion:
 		point = event.position - position
-		if is_shooting:
-			target = event.position
+		target = event.position
 	change_animation_direction(point)	
 
 func _physics_process(delta):
@@ -51,9 +51,7 @@ func _physics_process(delta):
 		velocity.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		velocity.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 		
-		
-		if velocity.length() > 0:
-			
+		if velocity.length() > 0:	
 			animationState.travel("move")
 			emit_signal("move", position)
 			velocity = velocity.normalized() * speed
@@ -65,8 +63,6 @@ func _physics_process(delta):
 			$ProyectileDelay.start()
 	else:
 		velocity = hit_location
-#		print(velocity)
-#		print(velocity.normalized())
 		emit_signal("move", position)
 		velocity = velocity.normalized() * 550
 		position += velocity * delta
@@ -84,7 +80,12 @@ func shoot_proyectile():
 	$ThrowProyectileSound.play()
 	proyectile.shoot(target)
 	
-	
+func calculate_damage(damage):
+	life -= damage
+	if(life <= 0):
+		pass
+	else:
+		life_bar.value = life	
 func change_animation_direction(direction: Vector2):
 	animationTree.set("parameters/idle/blend_position", direction)
 	animationTree.set("parameters/move/blend_position", direction)
@@ -93,9 +94,14 @@ func change_animation_direction(direction: Vector2):
 func _on_ProyectileDelay_timeout():
 	can_shoot = true
 
+func set_life_bar(bar : TextureProgress):
+	life_bar = bar
+	life_bar.max_value = max_life
+	life_bar.value = life
 
 func _on_Player_body_entered(body):
 	if body.is_in_group("mobs"):
+		calculate_damage(body.damage)
 		hit_location = Vector2()
 		if(body.position.x > position.x):
 			hit_location.x -= body.position.x - position.x

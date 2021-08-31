@@ -3,14 +3,15 @@ extends KinematicBody2D
 class_name Proyectile, "Proyectile.gd"
 
 export var speed = 500
-export var min_damage = 1
-export var max_damage = 10
+export var base_damge = 5
+export var min_damage = 8
+export var max_damage = 12
 export (PackedScene) var hit_animation
 var is_shooted = false
 var velocity = Vector2.ZERO
 var target
 
-func _physics_process(delta):
+func _process(delta):
 	if is_shooted:
 		velocity = velocity.normalized() * speed
 	var _collide = move_and_collide(velocity * delta)
@@ -25,7 +26,8 @@ func shoot(target: Vector2):
 	is_shooted = true
 
 func get_hit_damage():
-	return int(round( rand_range(min_damage, max_damage) ))
+	var rand_damage = (randf() * (max_damage - min_damage)) + min_damage
+	return base_damge + rand_damage / 2
 	
 func get_hit_sound() -> Node:
 	return $Hit_Sound

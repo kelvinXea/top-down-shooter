@@ -25,6 +25,11 @@ _global_script_classes=[ {
 "path": "res://Proyectile.gd"
 }, {
 "base": "Node",
+"class": "Spawn",
+"language": "GDScript",
+"path": "res://game/model/Spawn.gd"
+}, {
+"base": "Node",
 "class": "Stage",
 "language": "GDScript",
 "path": "res://game/model/Stage.gd"
@@ -38,6 +43,7 @@ _global_script_class_icons={
 "Mob": "res://Mob.gd",
 "MonsterSpawn": "res://game/model/MonsterSpawn.gd",
 "Proyectile": "res://Proyectile.gd",
+"Spawn": "res://game/model/Spawn.gd",
 "Stage": "res://game/model/Stage.gd",
 "Wave": "res://game/model/Wave.gd"
 }

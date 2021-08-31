@@ -2,7 +2,8 @@ extends Node
 class_name Wave, "Wave.gd"
 
 export var monster_spawns : Array = []
-export var spawn_speed = 2
+export var spawn_speed = 0.5
+export var time_betweet_monster_spawns = 2
 
 # Declare member variables here. Examples:
 # var a = 2

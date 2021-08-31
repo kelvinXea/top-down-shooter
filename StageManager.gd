@@ -15,14 +15,17 @@ func start(stage: Stage, _player_position):
 	for _wave in stage.waves:
 		var wave: Wave = _wave
 		for _monster_spawn in wave.monster_spawns:
-			var monster_spawn : MonsterSpawn = _monster_spawn
-			var mob = Mob.instance()
-			mob.player_position = player_position
-			mob.position = monster_spawn.position
-			get_parent().add_child(mob)
-			mob.move(150)
-			yield(get_tree().create_timer(wave.spawn_speed), "timeout")
-		
+			var monster_spawn_list = _monster_spawn.monsters_spaws
+			for monsters in monster_spawn_list:
+				var _monsters = monsters
+				for monster in _monsters:
+					var mob = Mob.instance()
+					mob.player_position = player_position
+					mob.position = monster.position
+					get_parent().add_child(mob)
+					mob.move(150)
+				yield(get_tree().create_timer(wave.spawn_speed), "timeout")
+			yield(get_tree().create_timer(wave.time_betweet_monster_spawns), "timeout")
 	
 
 

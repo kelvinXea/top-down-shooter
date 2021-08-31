@@ -47,4 +47,5 @@ scale = Vector2( 0.611012, 0.604706 )
 
 [node name="Hit_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
-volume_db = -8.078
+volume_db = -16.156
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
